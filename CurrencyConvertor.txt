@@ -1,0 +1,106 @@
+public class CurrencyConvertorController {
+
+    public Decimal amount{get; set;}
+    public String fromCurrency{get; set;}
+    public String toCurrency{get; set;}
+    public Decimal convertedAmount {get; set;}
+    public Boolean showResult{get; set;}
+    
+    public class CurrencyConversion{
+        public String fromCurrency;
+        public String toCurrency;
+        public Decimal value;
+     
+        public CurrencyConversion(String fromCurrency,String toCurrency,Decimal value)
+        {
+            this.fromCurrency = fromCurrency;
+            this.toCurrency = toCurrency;
+            this.value = value;
+        }
+    }
+    
+    public List<SelectOption> getCurrencyOptions()
+    {
+        //return a list of currency options dynamically
+        List<SelectOption> options = new List<SelectOption>();
+        options.add(new SelectOption('USD','USD'));
+        options.add(new SelectOption('EUR','EUR'));
+        options.add(new SelectOption('GBP','GBP'));
+        options.add(new SelectOption('INR','INR'));
+        
+        return options;
+    }
+    
+    public List<CurrencyConversion> conversionList;
+    
+    public CurrencyConvertorController()
+    {
+        conversionList = new List<CurrencyConversion>();
+        
+        //Adding items to the list
+   		conversionList.add(new CurrencyConversion('USD', 'EUR', 0.93));
+        conversionList.add(new CurrencyConversion('USD', 'GBP', 0.81));
+        conversionList.add(new CurrencyConversion('USD', 'INR', 82.82));
+        conversionList.add(new CurrencyConversion('EUR', 'USD', 1.08));
+        conversionList.add(new CurrencyConversion('EUR', 'GBP', 0.87));
+        conversionList.add(new CurrencyConversion('EUR', 'INR', 89.41));
+        conversionList.add(new CurrencyConversion('GBP', 'USD', 1.12));
+        conversionList.add(new CurrencyConversion('GBP', 'EUR', 1.15));
+        conversionList.add(new CurrencyConversion('GBP', 'INR', 102.67));
+        conversionList.add(new CurrencyConversion('INR', 'USD', 0.012));
+        conversionList.add(new CurrencyConversion('INR', 'GBP', 0.0097));
+        conversionList.add(new CurrencyConversion('INR', 'EUR', 0.011));    
+   
+    }
+    
+    public void convertCurrency()
+    {
+         Decimal conversionRate = 0;
+        for(CurrencyConversion conversion:conversionList)
+        {
+            if(conversion.fromCurrency == fromCurrency && conversion.toCurrency == ToCurrency)
+            {
+                conversionRate = conversion.value;
+                break;
+            }
+        }
+        convertedAmount = amount*conversionRate;
+        showResult = true;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<apex:page controller="CurrencyConvertorController">
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockSection >
+                <apex:inputText value="{!amount}" label="Amount"/>
+                <apex:selectList value="{!fromCurrency}" label="From Currency">
+                    <apex:selectOptions value="{!currencyOptions}"/>
+                </apex:selectList>
+                <apex:selectList value="{!toCurrency}" label="To Currency">
+                    <apex:selectOptions value="{!currencyOptions}"/>
+                </apex:selectList>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection >
+                <apex:commandButton value="Convert" action="{!convertCurrency}"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:outputText value="Converted Amount: {!convertedAmount}" rendered="{!showResult}"/>
+    </apex:form>
+</apex:page>

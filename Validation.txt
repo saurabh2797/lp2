@@ -1,0 +1,11 @@
+Validation
+
+
+DOB__c  >= TODAY()
+
+
+! REGEX( PAN__c , "^[A-Z]{5}[0-9]{4}[A-Z]{1}$")
+
+
+
+LEN( Phone__c ) != 10

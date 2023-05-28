@@ -1,0 +1,90 @@
+public class BMICalc {
+    public Double weight{get; set;}
+    public Double height{get; set;}
+    public Double bmi{get; set;}
+    public String category{get; set;}
+    
+    public void calculateBMI()
+    {
+        if(weight>0 && height>0)
+        {
+            Double heightmeters = height/100;
+            bmi = weight/(heightmeters*heightmeters);
+            bmi = Math.round(bmi*100)/100.0;
+            
+            if(bmi<16.5)
+            {
+                category = 'Severely underweight';
+            }else if(bmi<18.5)
+            {
+                category = 'Underweight';
+            }else if(bmi>=18.5 && bmi<=34.9)
+            {
+                category = 'Normal weight';
+            }else if(bmi>=25 && bmi<=29.9)
+            {
+                category='Overweight';
+            }else if(bmi>=30 && bmi<=34.9)
+            {
+            	category = 'Obesity Class I';    
+            }else{
+                category = 'Obesity';
+            }
+        }else{
+            bmi=null;
+            category = null;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+<apex:page controller="BMICalc">
+    <div style="Text-Align:center;width:350px;height:220px;border:2px ridge #D3D3D3;margin:auto;margin-top:200px;background-color:#f5f5f5">
+   <apex:form >
+        <apex:outputLabel value="Weight(kg) : "/>
+        <apex:inputText value="{!weight}" html-placeholder="Enter weight" onkeyup="validateInput(this)"/>
+        <br/>
+        
+        <apex:outputLabel value="Height(cm) : "/>
+        <apex:inputText value="{!height}" html-placeholder="Enter height"/>
+       <br/>
+    	<apex:commandButton value="Calculate BMI" action="{!calculateBMI}" rerender="resultPanel"  onkeyup="validateInput(this)"/>
+    <br/>
+    
+    <apex:outputPanel id="resultPanel">
+    	<apex:outputPanel rendered="{!bmi !=null}">
+            <h2><br/>Your BMI : {!bmi}<br/></h2>
+            <h2>Category : {!category}</h2>
+        </apex:outputPanel>
+        <br/><br/>
+        
+        <apex:outputPanel rendered="{!bmi == null && weight==null && height==null}">
+            <h2 style="color:red;">Please enter valid weight and height</h2>
+        </apex:outputPanel>
+    </apex:outputPanel>
+ </apex:form>   
+    
+    <script>
+    	function validateInput(input){
+            var value = input.value.trim();
+            var isValid = /^\d+(\.\d+)?$/.test(value);
+            
+            if(!isValid){
+                input.style.borderColor = 'red';
+            }else{
+                input.style.borderColor = '';
+                }
+            }
+    </script>
+</div>
+</apex:page>

@@ -1,0 +1,108 @@
+public class ScientificCalculatorController {
+    public double operand1 {get; set;}
+    public double operand2 {get; set;}
+    public double result {get; set;}
+    
+    public void add(){
+        result = operand1+operand2;
+    }
+    
+    public void subtract(){
+        result = operand1-operand2;   
+    }
+    
+      public void multiply(){
+        result = operand1*operand2;   
+    }
+      public void divide(){
+          if(operand2!=0)
+          {
+        result = operand1/operand2;   
+          }
+          else{
+              ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Error : '+'Division by zero is not allowed.'));
+          }
+    }
+    
+      public void square(){
+        result = operand1*operand1;   
+    }  
+    public void squareRoot(){
+        result = Math.sqrt(operand1);   
+    }
+    
+    public void power()
+    {
+        result = Math.pow(operand1,operand2);
+    }
+    
+    public void sine()
+    {
+        result = Math.sin(operand1);
+    }
+    
+    public void cosine()
+    {
+        result = Math.cos(operand1);
+    }
+    
+    public void tangent()
+    {
+        result = Math.tan(operand1);
+    }
+
+}
+
+
+
+
+
+<apex:page controller="ScientificCalculatorController">
+    <apex:form >
+        <apex:outputText value="Operand 1 : "/>
+        <apex:inputText value="{!operand1}"/>
+        <br/>
+        
+        <apex:outputText value="Operand 2:"/>
+        <apex:inputText value="{!operand2}"/>
+        <br/>
+        
+        <apex:commandButton value="Add" action="{!add}" rerender="result"/>
+         <apex:commandButton value="Subtract" action="{!subtract}" rerender="result"/>
+         <apex:commandButton value="Multiply" action="{!multiply}" rerender="result"/>
+         <apex:commandButton value="Divide" action="{!divide}" rerender="result"/>
+        
+        <br/>
+        
+         <apex:commandButton value="Square" action="{!square}" rerender="result"/>
+         <apex:commandButton value="Square Root" action="{!squareRoot}" rerender="result"/>
+         <apex:commandButton value="Power" action="{!power}" rerender="result"/>
+         <apex:commandButton value="Sine" action="{!sine}" rerender="result"/>
+         <apex:commandButton value="Cosine" action="{!cosine}" rerender="result"/>
+         <apex:commandButton value="Tangent" action="{!tangent}" rerender="result"/>
+        <br/>
+
+		<apex:outputPanel id="result">
+            <apex:outputText value="Result : {!result}"/>
+        </apex:outputPanel>
+        
+    </apex:form>
+    
+</apex:page>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
